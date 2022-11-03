@@ -16,7 +16,7 @@ var (
 )
 
 func GetToken() (string, error) {
-	signingKey := []byte("mysecretsigninkeysakibalaminappscode")
+	signingKey := []byte("Fahasecretkeyappscode")
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"name": user,
 		"exp":  time.Now().Add(600 * time.Second).Unix(),
@@ -26,7 +26,7 @@ func GetToken() (string, error) {
 }
 
 func verifyToken(tokenString string) (jwt.Claims, error) {
-	signingKey := []byte("mysecretsigninkeysakibalaminappscode")
+	signingKey := []byte("Fahasecretkeyappscode")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		return signingKey, nil
 	})
