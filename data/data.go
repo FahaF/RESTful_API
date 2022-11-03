@@ -6,17 +6,17 @@ var Books = []model.Book{
 	{
 		ID:    "1",
 		Isbn:  "438227",
-		Title: "Book One",
+		Title: "Amar Bondhu Rashed",
 		Author: &model.Author{
-			Firstname: "John", Lastname: "Doe",
+			Firstname: "Md Jafor", Lastname: "Iqbal",
 		},
 	},
 	{
 		ID:    "2",
 		Isbn:  "454555",
-		Title: "Book Two",
+		Title: "Thousand Splendid Sun",
 		Author: &model.Author{
-			Firstname: "Steve", Lastname: "Smith",
+			Firstname: "Khaled", Lastname: "Hosseini",
 		},
 	},
 }

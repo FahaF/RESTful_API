@@ -15,6 +15,42 @@ var (
 	pass string
 )
 
+// for authenticating basic user
+
+func BasicAuth(next http.HandlerFunc) http.HandlerFunc {
+	ret := func(w http.ResponseWriter, r *http.Request) {
+
+		//user's name and password - these should be from data base in real application
+
+		/*
+			// Auto initialization
+			user := "username"
+			pass := "password"
+		*/
+
+		// from environment
+		//export username="any user name without qoutation"
+		//export password="any password without qoutation"
+
+		user = os.Getenv("username")
+		pass = os.Getenv("password")
+
+		username, password, authOk := r.BasicAuth()
+		if !authOk {
+			http.Error(w, "not authorized", http.StatusUnauthorized)
+			return
+		}
+		if username != user || password != pass {
+			http.Error(w, "not authorized", http.StatusUnauthorized)
+			return
+		}
+		next.ServeHTTP(w, r)
+
+	}
+
+	return ret
+}
+
 func GetToken() (string, error) {
 	signingKey := []byte("Fahasecretkeyappscode")
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{

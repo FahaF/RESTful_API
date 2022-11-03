@@ -6,9 +6,9 @@ import (
 	"GoLangProject/model"
 	"encoding/json" // core package
 	"log"           // log errors
-	"math/rand"     // to add id as a randum number
-	"net/http"      // to work with http
-	"strconv"       // for string conversion
+	// to add id as a randum number
+	"net/http" // to work with http
+	"strconv"  // for string conversion
 
 	"github.com/gorilla/mux" // router
 )
@@ -47,6 +47,8 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 }
 
 // Add new book
+var counter int = 0
+
 func CreateBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	log.Println("addUser")
@@ -56,7 +58,8 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 		log.Println(err.Error())
 		return
 	}
-	book.ID = strconv.Itoa(rand.Intn(100000000)) // Mock ID - not safe
+	counter++
+	book.ID = strconv.Itoa(counter) // Mock ID - not safe
 	for _, item := range data.Books {
 		if book.ID == item.ID {
 			w.WriteHeader(http.StatusConflict)
@@ -80,10 +83,15 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 	log.Println("Authentication successful!")
 
 	params := mux.Vars(r)
+
 	for index, item := range data.Books {
 		if item.ID == params["id"] {
 			data.Books = append(data.Books[:index], data.Books[index+1:]...)
 			book := model.Book{}
+			if err := json.NewDecoder(r.Body).Decode(&book); err != nil {
+				log.Println(err.Error())
+				return
+			}
 			book.ID = params["id"]
 			data.Books = append(data.Books, book)
 			w.WriteHeader(http.StatusCreated)
@@ -146,12 +154,12 @@ func HandleRoutes(port string) {
 
 	// rout handlers / endpoint
 
-	r.HandleFunc("/login", LogIn).Methods("POST")
+	r.HandleFunc("/login", auth.BasicAuth(LogIn)).Methods("POST")
 	r.HandleFunc("/books", auth.JWTAuthentication(GetBooks)).Methods("GET") // r.HandleFunc(url,function).httpMethod
 	r.HandleFunc("/books/{id}", auth.JWTAuthentication(GetBook)).Methods("GET")
-	r.HandleFunc("/books", auth.JWTAuthentication(CreateBook)).Methods("POST")
-	r.HandleFunc("/books/{id}", auth.JWTAuthentication(UpdateBook)).Methods("PUT")
-	r.HandleFunc("/books/{id}", auth.JWTAuthentication(DeleteBook)).Methods("DELETE")
+	r.HandleFunc("/booksCreate", auth.JWTAuthentication(CreateBook)).Methods("POST")
+	r.HandleFunc("/booksUpdate/{id}", auth.JWTAuthentication(UpdateBook)).Methods("PUT")
+	r.HandleFunc("/booksDelete/{id}", auth.JWTAuthentication(DeleteBook)).Methods("DELETE")
 
 	// Start server
 	log.Fatal(http.ListenAndServe(":"+port, r))
