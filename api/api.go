@@ -6,12 +6,16 @@ import (
 	"GoLangProject/model"
 	"encoding/json" // core package
 	"log"           // log errors
+
 	// to add id as a randum number
 	"net/http" // to work with http
 	"strconv"  // for string conversion
+	"sync"
 
 	"github.com/gorilla/mux" // router
 )
+
+var mutex sync.Mutex
 
 // Get all books
 func GetBooks(w http.ResponseWriter, r *http.Request) {
@@ -28,6 +32,8 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 
 // Get single book
 func GetBook(w http.ResponseWriter, r *http.Request) {
+	mutex.Lock()
+	defer mutex.Unlock()
 	w.Header().Set("Content-Type", "application/json")
 	log.Println("getUser")
 	log.Println("Authentication successful!")
@@ -50,6 +56,8 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 var counter int = 0
 
 func CreateBook(w http.ResponseWriter, r *http.Request) {
+	mutex.Lock()
+	defer mutex.Unlock()
 	w.Header().Set("Content-Type", "application/json")
 	log.Println("addUser")
 	log.Println("Authentication successful!")
@@ -77,7 +85,8 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 
 // Update book
 func UpdateBook(w http.ResponseWriter, r *http.Request) {
-
+	mutex.Lock()
+	defer mutex.Unlock()
 	w.Header().Set("Content-Type", "application/json")
 	log.Println("updateUser")
 	log.Println("Authentication successful!")
@@ -108,6 +117,9 @@ func UpdateBook(w http.ResponseWriter, r *http.Request) {
 
 // Delete book
 func DeleteBook(w http.ResponseWriter, r *http.Request) {
+	mutex.Lock()
+	defer mutex.Unlock()
+
 	w.Header().Set("Content-Type", "application/json")
 	log.Println("updateUser")
 	log.Println("Authentication successful!")
