@@ -49,10 +49,14 @@ Book Model
     - go install github.com/FahaF/RESTful_API
 <hr/>
 
-### Server Run
+### Environment Variables
 
     export username="any user name without qoutation"
     export password="any password without qoutation"
+<hr/>
+
+### Server Run
+
     go run . 
 
 <hr/>
