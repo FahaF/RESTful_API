@@ -1,11 +1,12 @@
 package api
 
 import (
-	"GoLangProject/auth"
-	"GoLangProject/data"
-	"GoLangProject/model"
 	"encoding/json" // core package
 	"log"           // log errors
+
+	"github.com/FahaF/RESTful_API/auth"
+	"github.com/FahaF/RESTful_API/data"
+	"github.com/FahaF/RESTful_API/model"
 
 	// to add id as a randum number
 	"net/http" // to work with http

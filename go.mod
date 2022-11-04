@@ -1,8 +1,8 @@
-module GoLangProject
+module github.com/FahaF/RESTful_API
 
 go 1.19
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
-	github.com/gorilla/mux v1.8.0 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/gorilla/mux v1.8.0
 )

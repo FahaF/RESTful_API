@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoLangProject/api"
+	"github.com/FahaF/RESTful_API/api"
 )
 
 func main() {

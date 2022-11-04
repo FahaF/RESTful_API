@@ -1,6 +1,6 @@
 package data
 
-import "GoLangProject/model"
+import "github.com/FahaF/RESTful_API/model"
 
 var Books = []model.Book{
 	{
