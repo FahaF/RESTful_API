@@ -9,6 +9,8 @@ REST API using [GoLang](https://github.com/golang/go), [gorilla mux](https://git
   
 ### Server Run
 
+<p>go run . </p>
+
 ### API Endpoints
 
 | Endpoint    |  Function   |Method      |StatusCode  |Auth       |   
