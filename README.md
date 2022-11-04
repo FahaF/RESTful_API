@@ -57,7 +57,8 @@ Book Model
 
 ### Server Run
 
-    go run . 
+    go build -o bin/book-server .
+    ./bin/book-server
 
 <hr/>
 
